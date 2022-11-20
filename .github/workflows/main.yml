@@ -16,10 +16,11 @@ jobs:
       with:
         node-version: 16
 
-    - name: npm install, make test-coverage
+    - name: npm install, npm run test
       run: |
         npm install
-        npx c8 -reporter=lcov npm test
+        mkdir ./coverage
+        npm run test
 
     - name: Coveralls GitHub Action
       uses: coverallsapp/github-action@1.1.3
