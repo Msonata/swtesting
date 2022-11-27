@@ -140,6 +140,18 @@ describe('add.js', () =>
       }
     });
 
+    it("Should throw when adding together any integer -10000 to 10000 with undefined", () =>
+    {
+      for (let i = -10000; i <= 10000; i++)
+      {
+        expect(() => { add(undefined, i) }).to.throw;
+      }
+      for (let i = -10000; i <= 10000; i++)
+      {
+        expect(() => { add(i, undefined) }).to.throw;
+      }
+    });
+
     it("Should throw when adding together any integer -10000 to 10000 with an object", () =>
     {
       for (let i = -10000; i <= 10000; i++)
@@ -161,6 +173,18 @@ describe('add.js', () =>
       for (let i = -10000; i <= 10000; i++)
       {
         expect(() => { add(i, []) }).to.throw;
+      }
+    });
+
+    it("Should throw when adding together any integer -10000 to 10000 with a function", () =>
+    {
+      for (let i = -10000; i <= 10000; i++)
+      {
+        expect(() => { add(() => { }, i) }).to.throw;
+      }
+      for (let i = -10000; i <= 10000; i++)
+      {
+        expect(() => { add(i, () => { })}).to.throw;
       }
     });
   });
