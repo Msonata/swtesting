@@ -77,6 +77,7 @@ describe('filter.js', () =>
         }
 
         expect(filter(combined, ({ value }) => value)).to.deep.equal(even);
+        expect(filter(combined, ({ value }) => !value)).to.deep.equal(odd);
     });
   });
 
