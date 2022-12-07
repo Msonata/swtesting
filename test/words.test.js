@@ -40,4 +40,10 @@ describe("words.js", () => {
             const string = "testing 123 testing123";
             expect(words(string)).deep.equal(["testing", "123", "testing123"]);
         });
+
+        it("Should match words when a pattern is used", () => {
+            const string = "tupu, hupu, & lupu";
+            const pattern = "/[^, ]+/g";
+            expect(words(string, pattern)).deep.equal(["tupu", "hupu", "&", "lupu"]);
+        });
 });
