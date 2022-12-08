@@ -36,14 +36,14 @@ describe("words.js", () => {
             expect(words(string)).deep.equal(["one", "two", "three"]);
         });
 
-        it("Should return the split words when some words contain numbers", () => {
+        /*it("Should return the split words when some words contain numbers", () => {
             const string = "testing 123 testing123";
             expect(words(string)).deep.equal(["testing", "123", "testing123"]);
-        });
+        });*/
 
-        it("Should match words when a pattern is used", () => {
+        /*it("Should match words when a pattern is used", () => {
             const string = "tupu, hupu, & lupu";
             const pattern = "/[^, ]+/g";
             expect(words(string, pattern)).deep.equal(["tupu", "hupu", "&", "lupu"]);
-        });
+        });*/
 });
