@@ -9,9 +9,9 @@ describe("defaultTo.js", () => {
             expect(defaultTo(null, 10)).to.equal(10);
         });
 
-        /*it("Should return the default value when the value is NaN", () => {
+        it("Should return the default value when the value is NaN", () => {
             expect(defaultTo(NaN, 10)).to.equal(10);
-        });*/
+        });
 
         it("Should return the default value when the value is undefined", () => {
             expect(defaultTo(undefined, 10)).to.equal(10);

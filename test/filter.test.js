@@ -39,7 +39,7 @@ describe('filter.js', () =>
       expect(filter(users, ({ age }) => age < 60)).to.deep.equal(users);
     });
 
-    /*it("Should return an empty array if the predicate is never truthy", () =>
+    it("Should return an empty array if the predicate is never truthy", () =>
     {
       const users = [
       { 'user': 'barney', 'active': true, 'age': 52 },
@@ -49,13 +49,13 @@ describe('filter.js', () =>
       { 'user': 'amanda', 'active': false, 'age': 30}];
       
       expect(filter([], ({ age }) => age > 20)).to.deep.equal([]);
-    });*/
+    });
 
-    /*it("Should return an empty array for an empty array", () =>
+    it("Should return an empty array for an empty array", () =>
     {
       expect(filter([], () => true)).to.deep.equal([]);
       expect(filter([], () => false)).to.deep.equal([]);
-    });*/
+    });
 
     it("Should work on an array with 1000000 elements", () =>
     {

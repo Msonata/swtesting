@@ -5,12 +5,12 @@ describe('slice.js', () =>
 {
   describe('Positive tests', () =>
   {
-    /*it("Should work with the example given in the documentation", () =>
+    it("Should work with the example given in the documentation", () =>
     {
       var array = [1, 2, 3, 4]
 
       expect(_.slice(array, 2)).to.deep.equal([3, 4]);
-    });*/
+    });
 
     it("Should return the original array when slicing from beginning to end", () =>
     {
