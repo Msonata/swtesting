@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "c8 --exclude src/.internal --exclude test --reporter lcov mocha"
+    "test": "c8 --src src --all --exclude src/.internal --exclude test --reporter lcov mocha",
+    "testLocal": "c8 --src src --all --exclude src/.internal --exclude test mocha --reporter mochawesome"
   },
   "author": "",
   "license": "MIT",
