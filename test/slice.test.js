@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 describe('slice.js', () =>
 {
-  describe('Positive tests', () =>
+  describe('Valid inputs', () =>
   {
     it("Should work with the example given in the documentation", () =>
     {
@@ -76,61 +76,42 @@ describe('slice.js', () =>
     });
   });
 
-  describe('Negative tests', () =>
+  describe('Invalid inputs', () =>
   {
-    it("Should throw if the start position is beyond the array size", () =>
+    it("Should return empty array if the array is null", () =>
     {
-      let array = [1, 2, 3, 4];
-
-      expect(() => slice(array, 5, 4)).to.throw;
+      expect(slice(null, 2)).to.deep.equal([]);
     });
 
-    it("Should throw if the end position is beyond the array size", () =>
+    it("Should return empty array if the array is undefined", () =>
     {
-      let array = [1, 2, 3, 4];
-
-      expect(() => slice(array, 3, 5)).to.throw;
+      expect(slice(undefined, 2)).to.deep.equal([]);
     });
 
-    it("Should throw if the array is null", () =>
+    it("Should return empty array if the array is an object", () =>
     {
-      expect(() => slice(null, 2)).to.throw;
+      expect(slice({}, 2)).to.deep.equal([]);
     });
 
-    it("Should throw if the array is undefined", () =>
+    it("Should return empty array if the array is an integer", () =>
     {
-      expect(() => slice(undefined, 2)).to.throw;
+      expect(slice(1, 2)).to.deep.equal([]);
     });
 
-    it("Should throw if the array is an object", () =>
+    it("Should return empty array if the array is a float", () =>
     {
-      expect(() => slice({}, 2)).to.throw;
+      expect(slice(1.0, 2)).to.deep.equal([]);
     });
 
-    it("Should throw if the array is an integer", () =>
+    it("Should return empty array if the array is a boolean", () =>
     {
-      expect(() => slice(1, 2)).to.throw;
+      expect(slice(true, 2)).to.deep.equal([]);
+      expect(slice(false, 2)).to.deep.equal([]);
     });
 
-    it("Should throw if the array is a float", () =>
+    it("Should return empty array if the array is a function", () =>
     {
-      expect(() => slice(1.0, 2)).to.throw;
-    });
-
-    it("Should throw if the array is a string", () =>
-    {
-      expect(() => slice("test", 2)).to.throw;
-    });
-
-    it("Should throw if the array is a boolean", () =>
-    {
-      expect(() => slice(true, 2)).to.throw;
-      expect(() => slice(false, 2)).to.throw;
-    });
-
-    it("Should throw if the array is a function", () =>
-    {
-      expect(() => slice(() => {}, 2)).to.throw;
+      expect(slice(() => {}, 2)).to.deep.equal([]);
     });
   });
 });

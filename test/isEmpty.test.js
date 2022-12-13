@@ -1,9 +1,10 @@
 import isEmpty from '../src/isEmpty.js';
 import { expect } from 'chai';
+import isBuffer from '../src/isBuffer.js';
 
 describe('isEmpty.js', () =>
 {
-  describe('Positive tests', () =>
+  describe('Normal inputs', () =>
   {
     describe('With empty collections', () =>
     {
@@ -30,6 +31,31 @@ describe('isEmpty.js', () =>
       it("Should determine an empty string is empty", () =>
       {
         expect(isEmpty("")).to.equal(true);
+      });
+
+      it("Should determine an empty prototype is empty", () =>
+      {
+        expect(isEmpty(Object.prototype)).to.equal(true);
+      });
+
+      it("Should determine an empty buffer is empty", () =>
+      {
+        expect(isEmpty(Buffer.alloc(0))).to.equal(true);
+      });
+
+      it("Should determine an empty typed array is empty", () =>
+      {
+        expect(isEmpty(new Uint8Array())).to.equal(true);
+      });
+
+      it("Should determine an empty arguments is empty", () =>
+      {
+        function Test()
+        {
+          expect(isEmpty(arguments)).to.equal(true);
+        };
+
+        Test();
       });
     });
 
@@ -65,10 +91,39 @@ describe('isEmpty.js', () =>
       {
         expect(isEmpty("test")).to.equal(false);
       });
+
+      it("Should determine a non-empty prototype is not empty", () =>
+      {
+        function Test() { }
+
+        Test.prototype.testFunction = () => {};
+
+        expect(isEmpty(Test.prototype)).to.equal(false);
+      });
+
+      it("Should determine a non-empty buffer is not empty", () =>
+      {
+        expect(isEmpty(Buffer.alloc(5))).to.equal(false);
+      });
+
+      it("Should determine a non-empty typed array is not empty", () =>
+      {
+        expect(isEmpty(new Uint8Array([1, 2, 3]))).to.equal(false);
+      });
+
+      it("Should determine a non-empty arguments is not empty", () =>
+      {
+        function Test(test1, test2, test3)
+        {
+          expect(isEmpty(arguments)).to.equal(false);
+        }
+
+        Test(1, 2, 3);
+      });
     });
   });
 
-  describe('Negative tests', () =>
+  describe('Unusual inputs', () =>
   {
     it("Should determine a boolean is empty", () =>
     {

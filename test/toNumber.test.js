@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 describe('toNumber.js', () =>
 {
-  describe('Positive tests', () =>
+  describe('Normal inputs', () =>
   {
     it("Should work with integers", () =>
     {
@@ -101,41 +101,56 @@ describe('toNumber.js', () =>
     });
   });
 
-  describe('Negative tests', () =>
+  describe('Unusual inputs', () =>
   {
     it("Should return NaN with non-number strings", () =>
     {
       expect(toNumber("test")).to.be.NaN;
     });
 
-    it("Should throw with booleans", () =>
+    it("Should return 1 with true", () =>
     {
-      expect(() => { toNumber(true); }).to.throw;
+      expect(toNumber(true)).to.equal(1);
     });
 
-    it("Should throw with objects", () =>
+    it("Should return 0 with false", () =>
     {
-      expect(() => { toNumber({}); }).to.throw;
+      expect(toNumber(false)).to.equal(0);
     });
 
-    it("Should throw with arrays", () =>
+    it("Should return NaN with objects", () =>
     {
-      expect(() => { toNumber([]); }).to.throw;
+      expect(toNumber({})).to.be.NaN;
     });
 
-    it("Should throw with functions", () =>
+    it("Should return 0 with arrays", () =>
     {
-      expect(() => { toNumber(() => { }); }).to.throw;
+      expect(toNumber([])).to.equal(0);
     });
 
-    it("Should throw with null", () =>
+    it("Should return NaN with functions", () =>
     {
-      expect(() => { toNumber(null); }).to.throw;
+      expect(toNumber(() => { })).to.be.NaN;
     });
 
-    it("Should throw with undefined", () =>
+    it("Should return NaN with symbols", () =>
     {
-      expect(() => { toNumber(undefined); }).to.throw;
+      expect(toNumber(Symbol())).to.be.NaN;
+    });
+
+    it("Should return 0 with null", () =>
+    {
+      expect(toNumber(null)).to.equal(0);
+    });
+
+    it("Should return NaN with undefined", () =>
+    {
+      expect(toNumber(undefined)).to.be.NaN;
+    });
+
+    it("Should return NaN with bad signed hexadecimal strings", () =>
+    {
+      expect(toNumber("+0xFF")).to.be.NaN;
     });
   });
 });

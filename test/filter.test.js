@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 describe('filter.js', () =>
 {
-  describe('Positive tests', () =>
+  describe('Valid inputs', () =>
   {
     it("Should work with the example given in the documentation", () =>
     {
@@ -48,13 +48,20 @@ describe('filter.js', () =>
       { 'user': 'alicia', 'active': true, 'age': 32},
       { 'user': 'amanda', 'active': false, 'age': 30}];
       
-      expect(filter([], ({ age }) => age > 20)).to.deep.equal([]);
+      expect(filter(users, ({ active, age }) =>
+        age < 25 && !active)).to.deep.equal([]);
     });
 
     it("Should return an empty array for an empty array", () =>
     {
       expect(filter([], () => true)).to.deep.equal([]);
       expect(filter([], () => false)).to.deep.equal([]);
+    });
+
+    it("Should return an empty array for a null array", () =>
+    {
+      expect(filter(null, () => true)).to.deep.equal([]);
+      expect(filter(null, () => false)).to.deep.equal([]);
     });
 
     it("Should work on an array with 1000000 elements", () =>
@@ -81,103 +88,97 @@ describe('filter.js', () =>
     });
   });
 
-  describe('Negative tests', () =>
+  describe('Invalid inputs', () =>
   {
     describe('Invalid array', () =>
     {
-      it("Should throw if the array is null", () =>
+      it("Should return an empty array if the array is undefined", () =>
       {
-        expect(() => filter(null, () => true)).to.throw;
+        expect(filter(undefined, () => true)).to.deep.equal([]);
       });
     
-      it("Should throw if the array is undefined", () =>
+      it("Should return an empty array if the array is an object", () =>
       {
-        expect(() => filter(undefined, () => true)).to.throw;
+        expect(filter({}, () => true)).to.deep.equal([]);
+      });
+  
+      it("Should return an empty array if the array is an integer", () =>
+      {
+        expect(filter(1, () => true)).to.deep.equal([]);
       });
     
-      it("Should throw if the array is an object", () =>
+      it("Should return an empty array if the array is a float", () =>
       {
-        expect(() => filter({}, () => true)).to.throw;
+        expect(filter(1.0, () => true)).to.deep.equal([]);
       });
   
-      it("Should throw if the array is an integer", () =>
+      it("Should return an empty array if the array is NaN", () =>
       {
-        expect(() => filter(1, () => true)).to.throw;
-      });
-    
-      it("Should throw if the array is a float", () =>
-      {
-        expect(() => filter(1.0, () => true)).to.throw;
+        expect(filter(NaN, () => true)).to.deep.equal([]);
       });
   
-      it("Should throw if the array is NaN", () =>
+      it("Should return an empty array if the array is a boolean", () =>
       {
-        expect(() => filter(NaN, () => true)).to.throw;
+        expect(filter(true, () => true)).to.deep.equal([]);
+        expect(filter(false, () => true)).to.deep.equal([]);
       });
   
-      it("Should throw if the array is a string", () =>
+      it("Should return an empty array if the array is a function", () =>
       {
-        expect(() => filter("test", () => true)).to.throw;
-      });
-  
-      it("Should throw if the array is a boolean", () =>
-      {
-        expect(() => filter(true, () => true)).to.throw;
-        expect(() => filter(false, () => true)).to.throw;
-      });
-  
-      it("Should throw if the array is a function", () =>
-      {
-        expect(() => filter(() => { }, () => true)).to.throw;
+        expect(filter(() => {}, () => true)).to.deep.equal([]);
       });
     });
 
     describe('Invalid predicate', () =>
     {
+      const users = [
+        { 'user': 'barney', 'active': true },
+        { 'user': 'fred',   'active': false }];
+
       it("Should throw if the predicate is null", () =>
       {
-        expect(() => filter([], null)).to.throw;
+        expect(() => filter(users, null)).to.throw();
       });
     
       it("Should throw if the predicate is undefined", () =>
       {
-        expect(() => filter([], undefined)).to.throw;
+        expect(() => filter(users, undefined)).to.throw();
       });
     
       it("Should throw if the predicate is an object", () =>
       {
-        expect(() => filter([], {})).to.throw;
+        expect(() => filter(users, {})).to.throw();
       });
   
       it("Should throw if the predicate is an integer", () =>
       {
-        expect(() => filter([], 1)).to.throw;
+        expect(() => filter(users, 1)).to.throw();
       });
     
       it("Should throw if the predicate is a float", () =>
       {
-        expect(() => filter([], 1.0)).to.throw;
+        expect(() => filter(users, 1.0)).to.throw();
       });
   
       it("Should throw if the predicate is NaN", () =>
       {
-        expect(() => filter([], NaN)).to.throw;
+        expect(() => filter(users, NaN)).to.throw();
       });
   
       it("Should throw if the predicate is a string", () =>
       {
-        expect(() => filter([], "test")).to.throw;
+        expect(() => filter(users, "test")).to.throw();
       });
   
       it("Should throw if the predicate is a boolean", () =>
       {
-        expect(() => filter([], true)).to.throw;
-        expect(() => filter([], false)).to.throw;
+        expect(() => filter(users, true)).to.throw();
+        expect(() => filter(users, false)).to.throw();
       });
   
       it("Should throw if the predicate is an array", () =>
       {
-        expect(() => filter([], [])).to.throw;
+        expect(() => filter(users, [])).to.throw();
       });
     });
   });
